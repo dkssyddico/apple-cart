@@ -7,21 +7,25 @@ import ProductDetail from '../Pages/ProductDetail';
 import Order from '../Pages/Order';
 import OrderDetail from '../Pages/OrderDetail';
 import NavBar from './NavBar';
+import GlobalStyles from './GlobalStyles';
 
 function App() {
   return (
-    <Router>
-      <NavBar />
-      <Routes>
-        <Route path='/' element={<Main />}></Route>
-        <Route path='cart' element={<Cart />} />
-        <Route path='product/:id' element={<ProductDetail />} />
-        <Route path='payment' element={<Payment />} />
-        <Route path='order' element={<Order />} />
-        <Route path='order/:id' element={<OrderDetail />} />
-        <Route path='*' element={<Navigate to='/' replace={true} />} />
-      </Routes>
-    </Router>
+    <>
+      <GlobalStyles />
+      <Router>
+        <NavBar />
+        <Routes>
+          <Route path='/' element={<Main />}></Route>
+          <Route path='cart' element={<Cart />} />
+          <Route path='product/:id' element={<ProductDetail />} />
+          <Route path='payment' element={<Payment />} />
+          <Route path='order' element={<Order />} />
+          <Route path='order/:id' element={<OrderDetail />} />
+          <Route path='*' element={<Navigate to='/' replace={true} />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
