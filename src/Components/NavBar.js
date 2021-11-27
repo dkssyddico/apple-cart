@@ -1,21 +1,55 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Nav = styled.nav`
+  width: 100%;
+  background-color: ${(props) => props.theme.green};
+  color: ${(props) => props.theme.white};
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+`;
+
+const NavContainer = styled.div`
+  padding: 2rem 10rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const NavLeft = styled.div`
+  font-weight: 700;
+  font-size: 1.5rem;
+`;
+
+const NavRight = styled.div`
+  display: flex;
+`;
+
+const MenuItem = styled.li`
+  margin-left: 3rem;
+  font-weight: 500;
+`;
 
 function NavBar() {
   return (
-    <nav>
-      <div>
-        <Link to='/'>Apple Cart</Link>
-      </div>
-      <ul>
-        <li>
-          <Link to='cart'>Cart</Link>
-        </li>
-        <li>
-          <Link to='order'>Order</Link>
-        </li>
-      </ul>
-    </nav>
+    <Nav>
+      <NavContainer>
+        <NavLeft>
+          <Link to='/'>Apple Cart</Link>
+        </NavLeft>
+        <NavRight>
+          <MenuItem>
+            <Link to='cart'>Cart</Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to='order'>Order</Link>
+          </MenuItem>
+        </NavRight>
+      </NavContainer>
+    </Nav>
   );
 }
 
