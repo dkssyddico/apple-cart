@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -17,6 +17,13 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.3s ease-in-out;
+  @media screen and (max-width: 1023px) {
+    padding: 2rem 4rem 1rem;
+  }
+  @media screen and (max-width: 767px) {
+    padding: 2rem 1.5rem 1rem;
+  }
 `;
 
 const NavLeft = styled.div`
