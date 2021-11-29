@@ -19,6 +19,26 @@ const GlobalStyles = createGlobalStyle`
     cursor: pointer;
   }
 
+  input {
+    outline: none;
+  }
+
+
+input[type="number" i] {
+  padding: 0;
+}
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  }
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 `;
 
 export default GlobalStyles;

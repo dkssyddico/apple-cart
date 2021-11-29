@@ -34,7 +34,7 @@ function ProductCard({ id, image, name, price }) {
     <Link to={`/product/${id}`}>
       <div>
         <div>
-          <ProductImg src={`images/${image}`} alt='product' />
+          <ProductImg src={`/images/${image}`} alt='product' />
         </div>
         <MetaContainer>
           <MetaLeft>
