@@ -24,9 +24,9 @@ const GlobalStyles = createGlobalStyle`
   }
 
 
-input[type="number" i] {
-  padding: 0;
-}
+  input[type="number" i] {
+    padding: 0;
+  }
 
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {

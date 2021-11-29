@@ -38,7 +38,7 @@ function Main() {
 
   useEffect(() => {
     getProducts(dispatch);
-  }, []);
+  }, [dispatch]);
 
   return (
     <Section>

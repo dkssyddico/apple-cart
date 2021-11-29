@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getProduct } from '../context/Action';
+import { addCart, getProduct } from '../context/Action';
 import { Context } from '../context/MyContext';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import styled from 'styled-components';
@@ -123,10 +123,9 @@ const CheckoutBtn = styled(Btn)`
 function ProductDetail() {
   let { id: productId } = useParams();
   const [quantity, setQuantity] = useState(1);
-  const {
-    state: { product },
-    dispatch,
-  } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+
+  const { product } = state;
 
   useEffect(() => {
     getProduct(dispatch, productId);
@@ -148,10 +147,14 @@ function ProductDetail() {
   const handleCartClick = () => {
     let item = {
       productId,
+      name: product.name,
       quantity,
+      price: product.price,
+      image: product.image,
     };
-    console.log(item);
+    addCart(dispatch, item);
   };
+  console.log(state);
 
   return (
     <>
