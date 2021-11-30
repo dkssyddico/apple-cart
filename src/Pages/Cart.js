@@ -3,7 +3,7 @@ import { Context } from '../context/MyContext';
 import styled from 'styled-components';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { HiOutlineTrash } from 'react-icons/hi';
-import { addQty } from '../context/Action';
+import { addQty, changeQty } from '../context/Action';
 import { v4 as uuidv4 } from 'uuid';
 
 const Section = styled.section`
@@ -93,6 +93,7 @@ const QtyBtnContainer = styled.div`
   width: 100px;
   height: 30px;
   border: 1px solid #bdc3c7;
+  display: flex;
 `;
 
 const SmallBtn = styled.button`
@@ -102,10 +103,14 @@ const SmallBtn = styled.button`
   cursor: pointer;
 `;
 
-const Input = styled.input`
+const QtyBox = styled.div`
   border: none;
   text-align: center;
   width: 40%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const PriceContainer = styled.div`
@@ -148,16 +153,44 @@ function Cart() {
 
   const { cart } = state;
 
-  const handleIncrement = (item) => {
-    let itemInfo = {
-      productId: item.productId,
-      quantity: parseInt(item.quantity) + 1,
-    };
-    addQty(dispatch, itemInfo);
+  const handleQtyBtnClick = (event, item) => {
+    const { name } = event.target;
+
+    switch (name) {
+      case 'increment':
+        let incrementInfo = {
+          productId: item.productId,
+          quantity: parseInt(item.quantity) + 1,
+        };
+        changeQty(dispatch, incrementInfo);
+        break;
+      case 'decrement':
+        if (parseInt(item.quantity) - 1 < 1) {
+          alert('상품 수량은 1개 이상이어야 합니다.');
+        } else {
+          let decrementInfo = {
+            productId: item.productId,
+            quantity: parseInt(item.quantity) - 1,
+          };
+          changeQty(dispatch, decrementInfo);
+        }
+        break;
+      default:
+        break;
+    }
   };
 
-  const handleQtyChange = (event) => {
-    console.log(event.target.value);
+  const handleQtyChange = (event, item) => {
+    const { value } = event.target;
+    let changedItemInfo = {
+      productId: item.productId,
+      quantity: parseInt(value),
+    };
+    changeQty(dispatch, changedItemInfo);
+  };
+
+  const handleDeleteClick = (event) => {
+    console.log('hi');
   };
 
   return (
@@ -189,23 +222,17 @@ function Cart() {
                     <h3>{item.name}</h3>
                   </InfoContainer>
                   <QtyContainer>
-                    <QtyBtnContainer>
-                      <SmallBtn>
-                        <AiOutlineMinus />
-                      </SmallBtn>
-                      <Input
-                        type='number'
-                        onChange={(e) => handleQtyChange(e, item)}
-                        value={parseInt(item.quantity)}
-                      />
-                      <SmallBtn onClick={() => handleIncrement(item)}>
-                        <AiOutlinePlus />
-                      </SmallBtn>
+                    <QtyBtnContainer onClick={(event) => handleQtyBtnClick(event, item)}>
+                      <SmallBtn name='decrement'>-</SmallBtn>
+                      <QtyBox>
+                        <span>{parseInt(item.quantity)}</span>
+                      </QtyBox>
+                      <SmallBtn name='increment'>+</SmallBtn>
                     </QtyBtnContainer>
                   </QtyContainer>
                   <PriceContainer>$ {item.price}</PriceContainer>
                   <IconContainer>
-                    <HiOutlineTrash />
+                    <HiOutlineTrash onClick={handleDeleteClick(item)} />
                   </IconContainer>
                 </Card>
               ))}

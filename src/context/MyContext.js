@@ -1,5 +1,5 @@
 import { createContext, useReducer } from 'react';
-import { GET_PRODUCTS, GET_PRODUCT, ADD_CART, ADD_QUANTITY } from './Action';
+import { GET_PRODUCTS, GET_PRODUCT, ADD_CART, CHANGE_QUANTITY } from './Action';
 
 const initialState = {
   productList: {},
@@ -30,9 +30,8 @@ const reducer = (state = initialState, action) => {
         cart: [action.payload, ...state.cart],
       };
 
-    case ADD_QUANTITY:
+    case CHANGE_QUANTITY:
       let { productId, quantity } = action.payload;
-
       let newCart = state.cart.map((item) =>
         item.productId === productId ? { ...item, quantity } : item
       );
