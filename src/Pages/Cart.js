@@ -3,7 +3,7 @@ import { Context } from '../context/MyContext';
 import styled from 'styled-components';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { HiOutlineTrash } from 'react-icons/hi';
-import { addQty, changeQty } from '../context/Action';
+import { addQty, changeQty, deleteItem } from '../context/Action';
 import { v4 as uuidv4 } from 'uuid';
 
 const Section = styled.section`
@@ -151,11 +151,11 @@ const TotalContainer = styled.div`
 function Cart() {
   const { state, dispatch } = useContext(Context);
 
+  console.log(state);
   const { cart } = state;
 
   const handleQtyBtnClick = (event, item) => {
     const { name } = event.target;
-
     switch (name) {
       case 'increment':
         let incrementInfo = {
@@ -180,17 +180,9 @@ function Cart() {
     }
   };
 
-  const handleQtyChange = (event, item) => {
-    const { value } = event.target;
-    let changedItemInfo = {
-      productId: item.productId,
-      quantity: parseInt(value),
-    };
-    changeQty(dispatch, changedItemInfo);
-  };
-
-  const handleDeleteClick = (event) => {
-    console.log('hi');
+  const handleDeleteClick = (item) => {
+    let productId = item.productId;
+    deleteItem(dispatch, productId);
   };
 
   return (
@@ -232,7 +224,7 @@ function Cart() {
                   </QtyContainer>
                   <PriceContainer>$ {item.price}</PriceContainer>
                   <IconContainer>
-                    <HiOutlineTrash onClick={handleDeleteClick(item)} />
+                    <HiOutlineTrash onClick={() => handleDeleteClick(item)} />
                   </IconContainer>
                 </Card>
               ))}
