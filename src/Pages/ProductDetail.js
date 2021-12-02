@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { addCart, getProduct } from '../context/Action';
 import { Context } from '../context/MyContext';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
@@ -124,8 +124,8 @@ function ProductDetail() {
   let { id: productId } = useParams();
   const [quantity, setQuantity] = useState(1);
   const { state, dispatch } = useContext(Context);
-
-  const { product } = state;
+  const { product, cart } = state;
+  let navigate = useNavigate();
 
   useEffect(() => {
     getProduct(dispatch, productId);
@@ -145,16 +145,25 @@ function ProductDetail() {
   };
 
   const handleCartClick = () => {
-    let item = {
-      productId,
-      name: product.name,
-      quantity,
-      price: product.price,
-      image: product.image,
-    };
-    addCart(dispatch, item);
+    let existence = cart.filter((item) => item.productId === productId).length > 0 ? true : false;
+    if (existence) {
+      let confirm = window.confirm(
+        '이미 장바구니에 담겨있는 상품입니다. 장바구니로 이동하시겠습니까?'
+      );
+      if (confirm) {
+        navigate('/cart');
+      }
+    } else {
+      let item = {
+        productId,
+        name: product.name,
+        quantity,
+        price: product.price,
+        image: product.image,
+      };
+      addCart(dispatch, item);
+    }
   };
-  console.log(state);
 
   return (
     <>

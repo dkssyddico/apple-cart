@@ -1,11 +1,13 @@
 import { createContext, useReducer } from 'react';
 import { GET_PRODUCTS, GET_PRODUCT, ADD_CART, CHANGE_QUANTITY, DELETE_ITEM } from './Action';
 
+const LS_CART = 'cart';
+
 const initialState = {
   productList: {},
   loading: true,
   product: {},
-  cart: [],
+  cart: localStorage.getItem(LS_CART) ? JSON.parse(localStorage.getItem(LS_CART)) : [],
 };
 
 export const Context = createContext({});
@@ -24,23 +26,26 @@ const reducer = (state = initialState, action) => {
         product: action.payload,
       };
     case ADD_CART:
+      let cartAdded = [action.payload, ...state.cart];
+      localStorage.setItem(LS_CART, JSON.stringify(cartAdded));
       return {
         ...state,
-        cart: [action.payload, ...state.cart],
+        cart: cartAdded,
       };
     case CHANGE_QUANTITY:
       let { productId, quantity } = action.payload;
-      let newCart = state.cart.map((item) =>
+      let cartChangedQty = state.cart.map((item) =>
         item.productId === productId ? { ...item, quantity } : item
       );
+      localStorage.setItem(LS_CART, JSON.stringify(cartChangedQty));
       return {
         ...state,
-        cart: newCart,
+        cart: cartChangedQty,
       };
-
     case DELETE_ITEM:
       let deletedItemId = action.payload;
       let remained = state.cart.filter((item) => item.productId !== deletedItemId);
+      localStorage.setItem(LS_CART, JSON.stringify(remained));
       return {
         ...state,
         cart: remained,
