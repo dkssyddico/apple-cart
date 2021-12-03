@@ -7,6 +7,7 @@ import {
   DELETE_ITEM,
   CHANGE_CHECKED_STATUS,
   CHANGED_ALL_CHECKED,
+  DELETE_SELECTED,
 } from './Action';
 
 const LS_CART = 'cart';
@@ -75,6 +76,17 @@ const reducer = (state = initialState, action) => {
         cart: state.cart.map((item) => {
           return { ...item, selected: !allChecked };
         }),
+      };
+    case DELETE_SELECTED:
+      let selected = action.payload;
+      for (let i = 0; i < selected.length; i++) {
+        let item = selected[i];
+        let idx = state.cart.findIndex((e) => e.productId === item.productId);
+        state.cart.splice(idx, 1);
+        console.log(state.cart);
+      }
+      return {
+        ...state,
       };
     default:
       return initialState;

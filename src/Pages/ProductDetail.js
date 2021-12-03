@@ -163,6 +163,10 @@ function ProductDetail() {
         selected: true,
       };
       addCart(dispatch, item);
+      let confirm = window.confirm('상품이 장바구니에 담겼습니다. 장바구니로 이동하시겠습니까?');
+      if (confirm) {
+        navigate('/cart');
+      }
     }
   };
 

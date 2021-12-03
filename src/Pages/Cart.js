@@ -1,8 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../context/MyContext';
 import styled from 'styled-components';
 import { HiOutlineTrash } from 'react-icons/hi';
-import { changeQty, deleteItem, changeChecked, changeAllChecked } from '../context/Action';
+import {
+  changeQty,
+  deleteItem,
+  changeChecked,
+  changeAllChecked,
+  deleteSelected,
+} from '../context/Action';
 import { v4 as uuidv4 } from 'uuid';
 
 const Section = styled.section`
@@ -33,7 +39,7 @@ const Container = styled.div`
 
 const CartItemContainer = styled.div`
   flex-basis: 66%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   padding: 1.5rem 1rem;
 `;
 
@@ -48,11 +54,31 @@ const Subtitle = styled.h2`
   border-bottom: 2px solid black;
   padding-bottom: 1rem;
   margin: 2rem 0;
+  font-weight: 500;
 `;
 
 const TopContainer = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const AllCheckInput = styled.input`
+  margin-right: 0.5rem;
+`;
+
+const RemoveBtn = styled.button`
+  all: unset;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid black;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    background-color: black;
+    color: white;
+  }
 `;
 
 const Card = styled.div`
@@ -77,6 +103,9 @@ const InfoContainer = styled.div`
 
 const ImgContainer = styled.div`
   margin-right: 1rem;
+  justify-items: center;
+  display: flex;
+  align-items: center;
 `;
 
 const ProductImg = styled.img`
@@ -89,7 +118,7 @@ const QtyContainer = styled.div`
 `;
 
 const QtyBtnContainer = styled.div`
-  width: 100px;
+  width: 90px;
   height: 30px;
   border: 1px solid #bdc3c7;
   display: flex;
@@ -110,10 +139,11 @@ const QtyBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 14px;
 `;
 
 const PriceContainer = styled.div`
-  flex-basis: 10%;
+  flex-basis: 20%;
 `;
 
 const IconContainer = styled.div`
@@ -129,11 +159,11 @@ const IconContainer = styled.div`
 const SummaryContainer = styled.div`
   height: 200px;
   flex-basis: 30%;
-  border: 1px solid black;
+  border: 1px solid #f2f2f2;
   padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   h2 {
     align-self: flex-end;
   }
@@ -147,12 +177,29 @@ const TotalContainer = styled.div`
   font-size: 20px;
 `;
 
+const PayNowBtn = styled.button`
+  all: unset;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: ${(props) => props.theme.green};
+  color: white;
+  font-weight: 500;
+`;
+
 function Cart() {
   const { state, dispatch } = useContext(Context);
   const [allChecked, setAllChecked] = useState(true);
 
   console.log(state);
   const { cart } = state;
+
+  useEffect(() => {
+    cart.filter((item) => item.selected).length !== cart.length
+      ? setAllChecked(false)
+      : setAllChecked(true);
+  }, [cart]);
 
   const handleQtyBtnClick = (event, item) => {
     const { name } = event.target;
@@ -177,6 +224,14 @@ function Cart() {
         break;
       default:
         break;
+    }
+  };
+
+  const handleSelectedRemove = () => {
+    let confirm = window.confirm('선택한 상품을 삭제하시겠습니까?');
+    if (confirm) {
+      let selected = cart.filter((item) => item.selected);
+      deleteSelected(dispatch, selected);
     }
   };
 
@@ -205,15 +260,17 @@ function Cart() {
         <CartItemContainer>
           <TopContainer>
             <label htmlFor='selectAll'>
-              <input
+              <AllCheckInput
                 id='selectAll'
                 type='checkbox'
                 checked={allChecked ? true : false}
                 onChange={() => handleAllCheckedChange()}
               />
-              <span>Select All</span>
+              <span>
+                Select All {`${cart.filter((item) => item.selected).length} / ${cart.length}`}
+              </span>
             </label>
-            <button>Remove</button>
+            <RemoveBtn onClick={() => handleSelectedRemove()}>Remove</RemoveBtn>
           </TopContainer>
           <ItemsContainer>
             <Subtitle>Items</Subtitle>
@@ -244,7 +301,7 @@ function Cart() {
                       <SmallBtn name='increment'>+</SmallBtn>
                     </QtyBtnContainer>
                   </QtyContainer>
-                  <PriceContainer>$ {item.price}</PriceContainer>
+                  <PriceContainer>$ {item.quantity * item.price}</PriceContainer>
                   <IconContainer>
                     <HiOutlineTrash onClick={() => handleDeleteClick(item)} />
                   </IconContainer>
@@ -253,12 +310,20 @@ function Cart() {
           </ItemsContainer>
         </CartItemContainer>
         <SummaryContainer>
-          <h2>items</h2>
+          <h2>
+            {cart.filter((item) => item.selected).length > 1
+              ? `${cart.filter((item) => item.selected).length} items`
+              : `${cart.filter((item) => item.selected).length} item`}
+          </h2>
           <TotalContainer>
             <h2>Total</h2>
-            <h2>$</h2>
+            <h2>
+              {`$ ${cart
+                .filter((item) => item.selected)
+                .reduce((prev, curr) => prev + curr.quantity * curr.price, 0)}`}
+            </h2>
           </TotalContainer>
-          <button>Pay now</button>
+          <PayNowBtn>Pay now</PayNowBtn>
         </SummaryContainer>
       </Container>
     </Section>

@@ -7,6 +7,7 @@ export const CHANGE_QUANTITY = 'CHANGE_QUANTITY';
 export const DELETE_ITEM = 'CART/DELETE_ITEM';
 export const CHANGE_CHECKED_STATUS = 'CHANGE_CHECKED_STATUS';
 export const CHANGED_ALL_CHECKED = 'CHANGED_ALL_CHECKED';
+export const DELETE_SELECTED = 'DELETE_SELECTED';
 
 export const getProducts = (dispatch) => {
   dispatch({ type: GET_PRODUCTS, payload: items });
@@ -34,4 +35,8 @@ export const changeChecked = (dispatch, itemInfo) => {
 
 export const changeAllChecked = (dispatch, checked) => {
   dispatch({ type: CHANGED_ALL_CHECKED, payload: checked });
+};
+
+export const deleteSelected = (dispatch, items) => {
+  dispatch({ type: DELETE_SELECTED, payload: items });
 };
