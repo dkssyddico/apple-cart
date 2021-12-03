@@ -186,7 +186,7 @@ const PayNowBtn = styled.button`
   text-align: center;
   cursor: pointer;
   border-radius: 4px;
-  background-color: ${(props) => props.theme.green};
+  background-color: ${(props) => (props.disabled ? '#b2bec3' : props.theme.green)};
   color: white;
   font-weight: 500;
 `;
@@ -333,7 +333,12 @@ function Cart() {
                 .reduce((prev, curr) => prev + curr.quantity * curr.price, 0)}`}
             </h2>
           </TotalContainer>
-          <PayNowBtn onClick={() => handleCheckoutClick()}>Checkout</PayNowBtn>
+          <PayNowBtn
+            onClick={() => handleCheckoutClick()}
+            disabled={cart.filter((item) => item.selected).length === 0 ? true : false}
+          >
+            Checkout
+          </PayNowBtn>
         </SummaryContainer>
       </Container>
     </Section>

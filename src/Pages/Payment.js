@@ -1,15 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Context } from '../context/MyContext';
 import styled from 'styled-components';
-import { HiOutlineTrash } from 'react-icons/hi';
-import {
-  changeQty,
-  deleteItem,
-  changeChecked,
-  changeAllChecked,
-  deleteSelected,
-} from '../context/Action';
+import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { addOrder } from '../context/Action';
 
 const Section = styled.section`
   padding: 8rem 10rem 5rem;
@@ -134,8 +128,26 @@ const PayNowBtn = styled.button`
 
 function Payment() {
   const { state, dispatch } = useContext(Context);
-  const { checkout } = state;
-  console.log(checkout);
+  const { checkout, order } = state;
+
+  let navigate = useNavigate();
+
+  const handlePaymentClick = () => {
+    let orderDate = new Date();
+    let orderId = order.length + 1;
+    let orderInfo = {
+      orderId,
+      orderDate,
+      items: [...checkout],
+    };
+    addOrder(dispatch, orderInfo);
+    navigate('/complete', {
+      state: {
+        orderId,
+      },
+    });
+  };
+
   return (
     <Section>
       <Title>Payment</Title>
@@ -166,7 +178,7 @@ function Payment() {
             <h2>Total</h2>
             <h2>{`$ ${checkout.reduce((prev, curr) => prev + curr.quantity * curr.price, 0)}`}</h2>
           </TotalContainer>
-          <PayNowBtn>Payment</PayNowBtn>
+          <PayNowBtn onClick={() => handlePaymentClick()}>Payment</PayNowBtn>
         </SummaryContainer>
       </Container>
     </Section>

@@ -8,6 +8,7 @@ import Order from '../Pages/Order';
 import OrderDetail from '../Pages/OrderDetail';
 import NavBar from './NavBar';
 import GlobalStyles from './GlobalStyles';
+import PaymentComplete from '../Pages/PaymentComplete';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='cart' element={<Cart />} />
           <Route path='product/:id' element={<ProductDetail />} />
           <Route path='payment' element={<Payment />} />
+          <Route path='complete' element={<PaymentComplete />} />
           <Route path='order' element={<Order />} />
           <Route path='order/:id' element={<OrderDetail />} />
           <Route path='*' element={<Navigate to='/' replace={true} />} />

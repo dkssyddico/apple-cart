@@ -9,6 +9,7 @@ export const CHANGE_CHECKED_STATUS = 'CHANGE_CHECKED_STATUS';
 export const CHANGED_ALL_CHECKED = 'CHANGED_ALL_CHECKED';
 export const DELETE_SELECTED = 'DELETE_SELECTED';
 export const ADD_CHECKOUT = 'ADD_CHECKOUT';
+export const ADD_ORDER = 'ADD_ORDER';
 
 export const getProducts = (dispatch) => {
   dispatch({ type: GET_PRODUCTS, payload: items });
@@ -44,4 +45,8 @@ export const deleteSelected = (dispatch, items) => {
 
 export const addCheckout = (dispatch, items) => {
   dispatch({ type: ADD_CHECKOUT, payload: items });
+};
+
+export const addOrder = (dispatch, orderInfo) => {
+  dispatch({ type: ADD_ORDER, payload: orderInfo });
 };
