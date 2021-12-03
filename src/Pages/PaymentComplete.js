@@ -67,7 +67,7 @@ const OrderDetailBtn = styled(Btn)`
 function PaymentComplete() {
   let location = useLocation();
   const { state } = useContext(Context);
-  const currentOrder = state.order[0];
+  const currentOrder = state.orders[0];
 
   let {
     state: { orderId },

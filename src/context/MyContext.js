@@ -13,7 +13,7 @@ import {
 } from './Action';
 
 const LS_CART = 'cart';
-const LS_ORDER = 'order';
+const LS_ORDER = 'orders';
 
 const initialState = {
   productList: {},
@@ -21,7 +21,7 @@ const initialState = {
   product: {},
   cart: localStorage.getItem(LS_CART) ? JSON.parse(localStorage.getItem(LS_CART)) : [],
   checkout: [],
-  order: localStorage.getItem(LS_ORDER) ? JSON.parse(localStorage.getItem(LS_ORDER)) : [],
+  orders: localStorage.getItem(LS_ORDER) ? JSON.parse(localStorage.getItem(LS_ORDER)) : [],
 };
 
 export const Context = createContext({});
@@ -100,17 +100,18 @@ const reducer = (state = initialState, action) => {
       };
     case ADD_ORDER:
       let newOrder = action.payload;
-      let orderAdded = [newOrder, ...state.order];
+      let orderAdded = [newOrder, ...state.orders];
       localStorage.setItem(LS_ORDER, JSON.stringify(orderAdded));
       for (let i = 0; i < newOrder.items.length; i++) {
         let item = newOrder.items[i];
+
         let idx = state.cart.findIndex((e) => e.productId === item.productId);
         state.cart.splice(idx, 1);
       }
       localStorage.setItem(LS_CART, JSON.stringify(state.cart));
       return {
         ...state,
-        order: orderAdded,
+        orders: orderAdded,
       };
 
     default:

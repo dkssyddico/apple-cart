@@ -128,16 +128,21 @@ const PayNowBtn = styled.button`
 
 function Payment() {
   const { state, dispatch } = useContext(Context);
-  const { checkout, order } = state;
+  const { checkout, orders } = state;
 
   let navigate = useNavigate();
 
   const handlePaymentClick = () => {
     let orderDate = new Date();
-    let orderId = order.length + 1;
+    let orderId = orders.length + 1;
+    let year = orderDate.getFullYear();
+    let month = orderDate.getMonth() + 1;
+    let day = orderDate.getDate();
+    let hours = orderDate.getHours();
+    let mins = orderDate.getMinutes();
     let orderInfo = {
       orderId,
-      orderDate,
+      orderDate: `${year}.${month}.${day}(${hours}:${mins})`,
       items: [...checkout],
     };
     addOrder(dispatch, orderInfo);

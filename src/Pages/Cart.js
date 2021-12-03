@@ -95,13 +95,13 @@ const Card = styled.div`
 `;
 
 const SelectContainer = styled.div`
-  flex-basis: 5%;
+  flex-basis: 7%;
 `;
 
 const InfoContainer = styled.div`
   display: flex;
   align-items: center;
-  flex-basis: 50%;
+  flex-basis: 55%;
 `;
 
 const ImgContainer = styled.div`
@@ -117,7 +117,7 @@ const ProductImg = styled.img`
 `;
 
 const QtyContainer = styled.div`
-  flex-basis: 20%;
+  flex-basis: 18%;
 `;
 
 const QtyBtnContainer = styled.div`
@@ -146,7 +146,8 @@ const QtyBox = styled.div`
 `;
 
 const PriceContainer = styled.div`
-  flex-basis: 20%;
+  flex-basis: 15%;
+  padding-left: 1rem;
 `;
 
 const IconContainer = styled.div`
@@ -162,7 +163,7 @@ const IconContainer = styled.div`
 const SummaryContainer = styled.div`
   height: 200px;
   flex-basis: 30%;
-  border: 1px solid #dddddd;
+  border: 1px solid ${(props) => props.theme.lightGray};
   padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
