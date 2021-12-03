@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Context } from '../context/MyContext';
 import styled from 'styled-components';
-import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { HiOutlineTrash } from 'react-icons/hi';
-import { addQty, changeQty, deleteItem } from '../context/Action';
+import { changeQty, deleteItem, changeChecked, changeAllChecked } from '../context/Action';
 import { v4 as uuidv4 } from 'uuid';
 
 const Section = styled.section`
@@ -150,6 +149,7 @@ const TotalContainer = styled.div`
 
 function Cart() {
   const { state, dispatch } = useContext(Context);
+  const [allChecked, setAllChecked] = useState(true);
 
   console.log(state);
   const { cart } = state;
@@ -185,6 +185,19 @@ function Cart() {
     deleteItem(dispatch, productId);
   };
 
+  const handleCheckedChange = (item) => {
+    let itemInfo = {
+      ...item,
+      selected: !item.selected,
+    };
+    changeChecked(dispatch, itemInfo);
+  };
+
+  const handleAllCheckedChange = () => {
+    setAllChecked((prev) => !prev);
+    changeAllChecked(dispatch, allChecked);
+  };
+
   return (
     <Section>
       <Title>Cart</Title>
@@ -192,7 +205,12 @@ function Cart() {
         <CartItemContainer>
           <TopContainer>
             <label htmlFor='selectAll'>
-              <input id='selectAll' type='checkbox' />
+              <input
+                id='selectAll'
+                type='checkbox'
+                checked={allChecked ? true : false}
+                onChange={() => handleAllCheckedChange()}
+              />
               <span>Select All</span>
             </label>
             <button>Remove</button>
@@ -204,7 +222,11 @@ function Cart() {
                 <Card key={uuidv4()}>
                   <SelectContainer>
                     <label htmlFor='selectItem'>
-                      <input type='checkbox' />
+                      <input
+                        type='checkbox'
+                        checked={item.selected ? true : false}
+                        onChange={() => handleCheckedChange(item)}
+                      />
                     </label>
                   </SelectContainer>
                   <InfoContainer>

@@ -160,6 +160,7 @@ function ProductDetail() {
         quantity,
         price: product.price,
         image: product.image,
+        selected: true,
       };
       addCart(dispatch, item);
     }

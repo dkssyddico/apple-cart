@@ -1,5 +1,13 @@
 import { createContext, useReducer } from 'react';
-import { GET_PRODUCTS, GET_PRODUCT, ADD_CART, CHANGE_QUANTITY, DELETE_ITEM } from './Action';
+import {
+  GET_PRODUCTS,
+  GET_PRODUCT,
+  ADD_CART,
+  CHANGE_QUANTITY,
+  DELETE_ITEM,
+  CHANGE_CHECKED_STATUS,
+  CHANGED_ALL_CHECKED,
+} from './Action';
 
 const LS_CART = 'cart';
 
@@ -49,6 +57,24 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cart: remained,
+      };
+    case CHANGE_CHECKED_STATUS:
+      let itemCheckedChanged = action.payload;
+      return {
+        ...state,
+        cart: state.cart.map((item) =>
+          item.productId === itemCheckedChanged.productId
+            ? { ...item, selected: itemCheckedChanged.selected }
+            : item
+        ),
+      };
+    case CHANGED_ALL_CHECKED:
+      let allChecked = action.payload;
+      return {
+        ...state,
+        cart: state.cart.map((item) => {
+          return { ...item, selected: !allChecked };
+        }),
       };
     default:
       return initialState;
