@@ -8,6 +8,7 @@ import {
   CHANGE_CHECKED_STATUS,
   CHANGED_ALL_CHECKED,
   DELETE_SELECTED,
+  ADD_CHECKOUT,
 } from './Action';
 
 const LS_CART = 'cart';
@@ -17,6 +18,7 @@ const initialState = {
   loading: true,
   product: {},
   cart: localStorage.getItem(LS_CART) ? JSON.parse(localStorage.getItem(LS_CART)) : [],
+  checkout: [],
 };
 
 export const Context = createContext({});
@@ -83,10 +85,14 @@ const reducer = (state = initialState, action) => {
         let item = selected[i];
         let idx = state.cart.findIndex((e) => e.productId === item.productId);
         state.cart.splice(idx, 1);
-        console.log(state.cart);
       }
       return {
         ...state,
+      };
+    case ADD_CHECKOUT:
+      return {
+        ...state,
+        checkout: action.payload,
       };
     default:
       return initialState;

@@ -8,8 +8,10 @@ import {
   changeChecked,
   changeAllChecked,
   deleteSelected,
+  addCheckout,
 } from '../context/Action';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 const Section = styled.section`
   padding: 8rem 10rem 5rem;
@@ -30,6 +32,7 @@ const Title = styled.h1`
   padding-bottom: 1rem;
   border-bottom: 3px solid black;
   margin-bottom: 2rem;
+  font-weight: 500;
 `;
 
 const Container = styled.div`
@@ -159,7 +162,7 @@ const IconContainer = styled.div`
 const SummaryContainer = styled.div`
   height: 200px;
   flex-basis: 30%;
-  border: 1px solid #f2f2f2;
+  border: 1px solid #dddddd;
   padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
@@ -191,6 +194,7 @@ const PayNowBtn = styled.button`
 function Cart() {
   const { state, dispatch } = useContext(Context);
   const [allChecked, setAllChecked] = useState(true);
+  let navigate = useNavigate();
 
   console.log(state);
   const { cart } = state;
@@ -251,6 +255,12 @@ function Cart() {
   const handleAllCheckedChange = () => {
     setAllChecked((prev) => !prev);
     changeAllChecked(dispatch, allChecked);
+  };
+
+  const handleCheckoutClick = () => {
+    let selected = cart.filter((item) => item.selected);
+    addCheckout(dispatch, selected);
+    navigate('/payment');
   };
 
   return (
@@ -323,7 +333,7 @@ function Cart() {
                 .reduce((prev, curr) => prev + curr.quantity * curr.price, 0)}`}
             </h2>
           </TotalContainer>
-          <PayNowBtn>Pay now</PayNowBtn>
+          <PayNowBtn onClick={() => handleCheckoutClick()}>Checkout</PayNowBtn>
         </SummaryContainer>
       </Container>
     </Section>
