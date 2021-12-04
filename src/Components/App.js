@@ -23,7 +23,7 @@ function App() {
           <Route path='payment' element={<Payment />} />
           <Route path='complete' element={<PaymentComplete />} />
           <Route path='order' element={<Order />} />
-          <Route path='order/:id' element={<OrderDetail />} />
+          <Route path='order/:orderId' element={<OrderDetail />} />
           <Route path='*' element={<Navigate to='/' replace={true} />} />
         </Routes>
       </Router>

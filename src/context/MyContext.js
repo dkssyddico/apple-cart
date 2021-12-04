@@ -10,6 +10,7 @@ import {
   DELETE_SELECTED,
   ADD_CHECKOUT,
   ADD_ORDER,
+  GET_ORDER,
 } from './Action';
 
 const LS_CART = 'cart';
@@ -22,6 +23,7 @@ const initialState = {
   cart: localStorage.getItem(LS_CART) ? JSON.parse(localStorage.getItem(LS_CART)) : [],
   checkout: [],
   orders: localStorage.getItem(LS_ORDER) ? JSON.parse(localStorage.getItem(LS_ORDER)) : [],
+  order: {},
 };
 
 export const Context = createContext({});
@@ -113,7 +115,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         orders: orderAdded,
       };
-
+    case GET_ORDER:
+      let orderId = action.payload;
+      let orderSelected = state.orders.filter((order) => String(order.orderId) === String(orderId));
+      return {
+        ...state,
+        order: orderSelected[0],
+      };
     default:
       return initialState;
   }
