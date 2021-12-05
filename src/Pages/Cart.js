@@ -162,6 +162,16 @@ const IconContainer = styled.div`
   cursor: pointer;
 `;
 
+const NoItemContainer = styled.div`
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    font-weight: 500;
+  }
+`;
+
 const SummaryContainer = styled.div`
   height: 200px;
   flex-basis: 30%;
@@ -289,8 +299,8 @@ function Cart() {
             <RemoveBtn onClick={() => handleSelectedRemove()}>Remove</RemoveBtn>
           </TopContainer>
           <ItemsContainer>
-            <Subtitle>Items</Subtitle>
-            {cart &&
+            <Subtitle>List</Subtitle>
+            {cart && cart.length > 0 ? (
               cart.map((item) => (
                 <Card key={uuidv4()}>
                   <SelectContainer>
@@ -322,7 +332,12 @@ function Cart() {
                     <HiOutlineTrash onClick={() => handleDeleteClick(item)} />
                   </IconContainer>
                 </Card>
-              ))}
+              ))
+            ) : (
+              <NoItemContainer>
+                <span>No item in cart</span>
+              </NoItemContainer>
+            )}
           </ItemsContainer>
         </CartItemContainer>
         <SummaryContainer>

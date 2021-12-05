@@ -164,7 +164,7 @@ function Payment() {
       <Container>
         <CartItemContainer>
           <ItemsContainer>
-            <Subtitle>Items</Subtitle>
+            <Subtitle>List</Subtitle>
             {checkout &&
               checkout.map((item) => (
                 <Card key={uuidv4()}>
