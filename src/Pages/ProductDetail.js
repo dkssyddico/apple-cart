@@ -29,6 +29,7 @@ const ImgContainer = styled.div`
 const ProductImg = styled.img`
   width: 100%;
   height: 350px;
+  border-radius: 16px;
 `;
 
 const FlexContainer = styled.div`

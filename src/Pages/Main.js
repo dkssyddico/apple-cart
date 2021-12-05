@@ -6,7 +6,7 @@ import { getProducts } from '../context/Action';
 import { Context } from '../context/MyContext';
 
 const Section = styled.section`
-  padding: 8rem 10rem 5rem;
+  padding: 8rem 8rem 5rem;
   transition: all 0.3s ease-in-out;
   @media screen and (max-width: 1023px) {
     padding: 8rem 4rem 5rem;
@@ -19,14 +19,15 @@ const Section = styled.section`
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 2%;
+  justify-content: space-between;
+  gap: 3%;
 `;
 
 const CardContainer = styled.div`
-  flex-basis: 23.5%;
+  flex-basis: 22.5%;
   margin-bottom: 2rem;
   @media screen and (max-width: 1023px) {
-    flex-basis: 49%;
+    flex-basis: 48%;
   }
 `;
 

@@ -13,7 +13,7 @@ const Nav = styled.nav`
 `;
 
 const NavContainer = styled.div`
-  padding: 2rem 10rem 1rem;
+  padding: 2rem 8rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
