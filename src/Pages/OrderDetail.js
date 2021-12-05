@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from '../context/MyContext';
 import { addCart, getOrder } from '../context/Action';
+import { v4 as uuidv4 } from 'uuid';
 
 const Section = styled.section`
   padding: 8rem 10rem 5rem;
   height: 100%;
   display: flex;
   flex-direction: column;
+  transition: all 0.3s ease-in-out;
   @media screen and (max-width: 1023px) {
     padding: 8rem 4rem 5rem;
   }
@@ -58,6 +60,10 @@ const Card = styled.div`
 const CardContainer = styled.div`
   display: flex;
   padding: 1rem 1.5rem;
+  transition: all 0.3s ease-in-out;
+  @media screen and (max-width: 767px) {
+    padding: 0.8rem 1rem;
+  }
 `;
 
 const ImgContainer = styled.div`
@@ -78,6 +84,10 @@ const MetaContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  transition: all 0.3s ease-in-out;
+  @media screen and (max-width: 767px) {
+    padding: 0.8rem 1rem;
+  }
 `;
 
 const ItemName = styled.h3`
@@ -102,6 +112,10 @@ const CartBtn = styled.button`
   background-color: ${(props) => props.theme.green};
   color: white;
   font-weight: 500;
+  transition: all 0.3s ease-in-out;
+  @media screen and (max-width: 767px) {
+    font-size: 14px;
+  }
 `;
 
 function OrderDetail() {
@@ -159,14 +173,20 @@ function OrderDetail() {
             <h2>
               Total Price:{' '}
               <Strong>
-                $ {order.items.reduce((prev, curr) => prev + curr.quantity * curr.price, 0)}
+                {`$ ${
+                  order.items
+                    ? order.items.length > 1
+                      ? order.items.reduce((prev, curr) => prev + curr.quantity * curr.price, 0)
+                      : order.items[0].price
+                    : ''
+                }`}
               </Strong>
             </h2>
           </OrderInfoContainer>
           <CardsContainer>
             {order.items &&
               order.items.map((item) => (
-                <Card>
+                <Card key={uuidv4()}>
                   <CardContainer>
                     <ImgContainer>
                       <Image src={`/images/${item.image}`} alt='product' />

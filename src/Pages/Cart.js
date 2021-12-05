@@ -37,13 +37,15 @@ const Title = styled.h1`
 
 const Container = styled.div`
   display: flex;
-  gap: 4%;
+  justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 const CartItemContainer = styled.div`
-  flex-basis: 66%;
-  /* border: 1px solid black; */
-  padding: 1.5rem 1rem;
+  flex-basis: 60%;
+  @media screen and (max-width: 767px) {
+    flex-basis: 100%;
+  }
 `;
 
 const ItemsContainer = styled.div`
@@ -170,6 +172,9 @@ const SummaryContainer = styled.div`
   justify-content: space-between;
   h2 {
     align-self: flex-end;
+  }
+  @media screen and (max-width: 767px) {
+    flex-basis: 100%;
   }
 `;
 

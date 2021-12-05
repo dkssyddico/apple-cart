@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { addCart, getProduct } from '../context/Action';
+import { addCart, addCheckout, getProduct } from '../context/Action';
 import { Context } from '../context/MyContext';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import styled from 'styled-components';
@@ -170,6 +170,19 @@ function ProductDetail() {
     }
   };
 
+  const handleShowNowClick = () => {
+    let item = {
+      productId,
+      name: product.name,
+      quantity,
+      price: product.price,
+      image: product.image,
+      selected: true,
+    };
+    addCheckout(dispatch, [item]);
+    navigate('/payment');
+  };
+
   return (
     <>
       {product && (
@@ -201,7 +214,7 @@ function ProductDetail() {
             </TotalPriceContainer>
             <BtnContainer>
               <CartBtn onClick={handleCartClick}>Add to cart</CartBtn>
-              <CheckoutBtn>Shop now</CheckoutBtn>
+              <CheckoutBtn onClick={handleShowNowClick}>Shop now</CheckoutBtn>
             </BtnContainer>
           </MetaContainer>
         </Section>

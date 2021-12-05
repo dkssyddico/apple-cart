@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import { Context } from '../context/MyContext';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
+import { FaArrowRight } from 'react-icons/fa';
 
 const Section = styled.section`
   padding: 8rem 10rem 5rem;
   height: 100%;
   display: flex;
   flex-direction: column;
+  transition: all 0.3s ease-in-out;
   @media screen and (max-width: 1023px) {
     padding: 8rem 4rem 5rem;
   }
@@ -51,11 +53,15 @@ const MetaContainer = styled.div`
 const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding-bottom: 1rem;
   border-bottom: 1px solid ${(props) => props.theme.lightGray};
   h3:first-child {
     font-weight: 500;
     font-size: 18px;
+  }
+  h3:last-child {
+    font-size: 15px;
   }
 `;
 
@@ -108,7 +114,9 @@ function Order() {
                             }`
                           : `${firstItem.name}`}
                       </h3>
-                      <h3>Go to Detail</h3>
+                      <h3>
+                        <FaArrowRight />
+                      </h3>
                     </TitleContainer>
                   </Link>
                   <InfoContainer>
