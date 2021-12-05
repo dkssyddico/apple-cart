@@ -248,10 +248,14 @@ function Cart() {
   };
 
   const handleSelectedRemove = () => {
-    let confirm = window.confirm('선택한 상품을 삭제하시겠습니까?');
-    if (confirm) {
-      let selected = cart.filter((item) => item.selected);
-      deleteSelected(dispatch, selected);
+    let selected = cart.filter((item) => item.selected);
+    if (selected.length > 0) {
+      let confirm = window.confirm('선택한 상품을 삭제하시겠습니까?');
+      if (confirm) {
+        deleteSelected(dispatch, selected);
+      }
+    } else {
+      alert('삭제할 상품이 없습니다.');
     }
   };
 

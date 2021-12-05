@@ -88,6 +88,16 @@ const Span = styled.span`
   font-size: 16px;
 `;
 
+const NoOrderContainer = styled.div`
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    font-weight: 500;
+  }
+`;
+
 function Order() {
   const { state } = useContext(Context);
   const { orders } = state;
@@ -95,7 +105,7 @@ function Order() {
     <Section>
       <Title>Order History</Title>
       <Container>
-        {orders &&
+        {orders && orders.length > 0 ? (
           orders.map((order) => {
             let { orderDate } = order;
             let firstItem = order.items[0];
@@ -141,7 +151,12 @@ function Order() {
                 </MetaContainer>
               </Card>
             );
-          })}
+          })
+        ) : (
+          <NoOrderContainer>
+            <span>No order</span>
+          </NoOrderContainer>
+        )}
       </Container>
     </Section>
   );

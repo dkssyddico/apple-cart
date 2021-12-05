@@ -32,10 +32,10 @@ const CardContainer = styled.div`
 `;
 
 function Main() {
-  const {
-    state: { loading, productList },
-    dispatch,
-  } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+  console.log(state);
+
+  const { loading, productList } = state;
 
   useEffect(() => {
     getProducts(dispatch);

@@ -144,7 +144,8 @@ function Payment() {
     let month = orderDate.getMonth() + 1;
     let day = orderDate.getDate();
     let hours = orderDate.getHours();
-    let mins = orderDate.getMinutes();
+    let mins = orderDate.getMinutes() < 10 ? `0${orderDate.getMinutes()}` : orderDate.getMinutes();
+
     let orderInfo = {
       orderId,
       orderDate: `${year}.${month}.${day}(${hours}:${mins})`,
