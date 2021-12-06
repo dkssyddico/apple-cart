@@ -212,7 +212,6 @@ function Cart() {
   const [allChecked, setAllChecked] = useState(true);
   let navigate = useNavigate();
 
-  console.log(state);
   const { cart } = state;
 
   useEffect(() => {

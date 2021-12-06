@@ -8,9 +8,7 @@ const Nav = styled.nav`
   background-color: ${(props) => props.theme.green};
   color: ${(props) => props.theme.white};
   position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
+  z-index: 3;
 `;
 
 const NavContainer = styled.div`

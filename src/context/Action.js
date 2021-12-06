@@ -11,6 +11,7 @@ export const DELETE_SELECTED = 'DELETE_SELECTED';
 export const ADD_CHECKOUT = 'ADD_CHECKOUT';
 export const ADD_ORDER = 'ADD_ORDER';
 export const GET_ORDER = 'GET_ORDER';
+export const CHANGE_FAVORITE = 'CHANGE_FAVORITE';
 
 export const getProducts = (dispatch) => {
   dispatch({ type: GET_PRODUCTS, payload: items });
@@ -54,4 +55,8 @@ export const addOrder = (dispatch, orderInfo) => {
 
 export const getOrder = (dispatch, orderId) => {
   dispatch({ type: GET_ORDER, payload: orderId });
+};
+
+export const changeFavorite = (dispatch, itemInfo) => {
+  dispatch({ type: CHANGE_FAVORITE, payload: itemInfo });
 };

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { HiOutlineHeart } from 'react-icons/hi';
+import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
+import { Context } from '../context/MyContext';
+import { changeFavorite } from '../context/Action';
 
 const Card = styled.div`
+  position: relative;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 16px;
   transition: all 0.3s ease-in-out;
@@ -25,44 +28,49 @@ const ProductImg = styled.img`
 `;
 
 const MetaContainer = styled.div`
-  padding: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const MetaLeft = styled.div`
+  padding: 1rem;
   h2 {
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-  }
-  h3 {
-    font-weight: 500;
+    margin-bottom: 0.8rem;
   }
 `;
 
-const MetaRight = styled.div`
-  font-size: 1.3rem;
+const FavoriteBox = styled.div`
+  position: absolute;
+  font-size: 1.8rem;
+  bottom: 0.5rem;
+  right: 0.8rem;
+  z-index: 1;
+  cursor: pointer;
+  button {
+    all: unset;
+  }
 `;
 
-function ProductCard({ id, image, name, price }) {
+function ProductCard({ id, image, name, price, favorite }) {
+  const { dispatch } = useContext(Context);
+  const handleFavoriteClick = () => {
+    let itemInfo = {
+      productId: id,
+      favorite: !favorite,
+    };
+    changeFavorite(dispatch, itemInfo);
+  };
+
   return (
-    <Link to={`/product/${id}`}>
-      <Card>
+    <Card>
+      <Link to={`/product/${id}`}>
         <div>
           <ProductImg src={`/images/${image}`} alt='product' />
         </div>
         <MetaContainer>
-          <MetaLeft>
-            <h2>{name}</h2>
-            <h3>$ {price}</h3>
-          </MetaLeft>
-          <MetaRight>
-            <HiOutlineHeart />
-          </MetaRight>
+          <h2>{name}</h2>
+          <h3>$ {price}</h3>
         </MetaContainer>
-      </Card>
-    </Link>
+      </Link>
+      <FavoriteBox onClick={handleFavoriteClick}>
+        <button>{favorite ? <HiHeart /> : <HiOutlineHeart />}</button>
+      </FavoriteBox>
+    </Card>
   );
 }
 

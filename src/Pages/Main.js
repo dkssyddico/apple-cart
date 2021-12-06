@@ -33,7 +33,6 @@ const CardContainer = styled.div`
 
 function Main() {
   const { state, dispatch } = useContext(Context);
-  console.log(state);
 
   const { loading, productList } = state;
 
@@ -49,7 +48,13 @@ function Main() {
         <Container>
           {productList.map((item) => (
             <CardContainer key={item.id}>
-              <ProductCard id={item.id} image={item.image} name={item.name} price={item.price} />
+              <ProductCard
+                id={item.id}
+                image={item.image}
+                name={item.name}
+                price={item.price}
+                favorite={item.favorite}
+              />
             </CardContainer>
           ))}
         </Container>

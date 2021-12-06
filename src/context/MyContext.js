@@ -11,13 +11,17 @@ import {
   ADD_CHECKOUT,
   ADD_ORDER,
   GET_ORDER,
+  CHANGE_FAVORITE,
 } from './Action';
 
 const LS_CART = 'cart';
 const LS_ORDER = 'orders';
+const LS_PRODUCTS = 'products';
 
 const initialState = {
-  productList: {},
+  productList: localStorage.getItem(LS_PRODUCTS)
+    ? JSON.parse(localStorage.getItem(LS_PRODUCTS))
+    : [],
   loading: true,
   product: {},
   cart: localStorage.getItem(LS_CART) ? JSON.parse(localStorage.getItem(LS_CART)) : [],
@@ -31,6 +35,7 @@ export const Context = createContext({});
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PRODUCTS:
+      localStorage.setItem(LS_PRODUCTS, JSON.stringify(action.payload));
       return {
         ...state,
         productList: action.payload,
@@ -122,6 +127,22 @@ const reducer = (state = initialState, action) => {
         ...state,
         order: orderSelected[0],
       };
+    case CHANGE_FAVORITE:
+      let productFavoriteChanged = action.payload;
+      let productChanged = state.productList[productFavoriteChanged.productId];
+      productChanged.favorite = productFavoriteChanged.favorite;
+      let listChanged = state.productList.filter((product) =>
+        String(product.productId) === String(productFavoriteChanged.id)
+          ? { ...product, favorite: productFavoriteChanged.favorite }
+          : product
+      );
+      localStorage.setItem(LS_PRODUCTS, JSON.stringify(listChanged));
+      return {
+        ...state,
+        product: productChanged,
+        productList: listChanged,
+      };
+
     default:
       return initialState;
   }

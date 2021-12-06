@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { addCart, addCheckout, getProduct } from '../context/Action';
+import { addCart, addCheckout, changeFavorite, getProduct } from '../context/Action';
 import { Context } from '../context/MyContext';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
 import styled from 'styled-components';
 
 const Section = styled.section`
-  padding: 8rem 10rem 5rem;
+  padding: 8rem 8rem 5rem;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -49,6 +50,20 @@ const MetaContainer = styled(FlexContainer)`
     height: 300px;
     flex-basis: 100%;
   }
+`;
+
+const TopContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const FavoriteBtn = styled.button`
+  all: unset;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.5rem;
 `;
 
 const PriceContainer = styled(FlexContainer)`
@@ -179,9 +194,19 @@ function ProductDetail() {
       price: product.price,
       image: product.image,
       selected: true,
+      favorite: product.favorite,
     };
     addCheckout(dispatch, [item]);
     navigate('/payment');
+  };
+
+  const handleFavoriteClick = () => {
+    let favorite = product.favorite;
+    let itemInfo = {
+      productId,
+      favorite: !favorite,
+    };
+    changeFavorite(dispatch, itemInfo);
   };
 
   return (
@@ -192,7 +217,12 @@ function ProductDetail() {
             <ProductImg src={`/images/${product.image}`} alt='product' />
           </ImgContainer>
           <MetaContainer>
-            <h2>{product.name}</h2>
+            <TopContainer>
+              <h2>{product.name}</h2>
+              <FavoriteBtn onClick={handleFavoriteClick}>
+                {product.favorite ? <HiHeart /> : <HiOutlineHeart />}
+              </FavoriteBtn>
+            </TopContainer>
             <PriceContainer>
               <h3>Price</h3>
               <h3>$ {product.price}</h3>
