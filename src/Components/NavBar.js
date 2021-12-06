@@ -5,8 +5,8 @@ import { Context } from '../context/MyContext';
 
 const Nav = styled.nav`
   width: 100%;
-  background-color: ${(props) => props.theme.green};
-  color: ${(props) => props.theme.white};
+  background-color: ${(props) => props.theme.color.green};
+  color: ${(props) => props.theme.color.white};
   position: fixed;
   z-index: 3;
 `;
@@ -49,7 +49,7 @@ const CartCount = styled.div`
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background-color: red;
+  background-color: ${(props) => props.theme.color.red};
   display: flex;
   justify-content: center;
   align-items: center;

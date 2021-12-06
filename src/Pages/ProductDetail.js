@@ -82,7 +82,7 @@ const QtyContainer = styled(FlexContainer)`
 const QtyBtnContainer = styled.div`
   width: 140px;
   height: 40px;
-  border: 1px solid #bdc3c7;
+  border: 1px solid ${(props) => props.theme.color.lightGray};
 `;
 
 const SmallBtn = styled.button`
@@ -104,7 +104,7 @@ const TotalPriceContainer = styled(FlexContainer)`
   p:last-child {
     font-size: 24px;
     font-weight: 700;
-    color: red;
+    color: ${(props) => props.theme.color.red};
   }
 `;
 
@@ -122,7 +122,7 @@ const Btn = styled.button`
 
 const CartBtn = styled(Btn)`
   flex: 1 1 45%;
-  background-color: ${(props) => props.theme.green};
+  background-color: ${(props) => props.theme.color.green};
   color: white;
 `;
 

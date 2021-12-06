@@ -125,7 +125,7 @@ const QtyContainer = styled.div`
 const QtyBtnContainer = styled.div`
   width: 90px;
   height: 30px;
-  border: 1px solid #bdc3c7;
+  border: 1px solid ${(props) => props.theme.color.lightGray};
   display: flex;
 `;
 
@@ -175,7 +175,7 @@ const NoItemContainer = styled.div`
 const SummaryContainer = styled.div`
   height: 200px;
   flex-basis: 30%;
-  border: 1px solid ${(props) => props.theme.lightGray};
+  border: 1px solid ${(props) => props.theme.color.lightGray};
   padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
@@ -202,7 +202,7 @@ const PayNowBtn = styled.button`
   text-align: center;
   cursor: pointer;
   border-radius: 4px;
-  background-color: ${(props) => (props.disabled ? '#b2bec3' : props.theme.green)};
+  background-color: ${(props) => (props.disabled ? '#b2bec3' : props.theme.color.green)};
   color: white;
   font-weight: 500;
 `;

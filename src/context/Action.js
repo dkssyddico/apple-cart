@@ -13,8 +13,13 @@ export const ADD_ORDER = 'ADD_ORDER';
 export const GET_ORDER = 'GET_ORDER';
 export const CHANGE_FAVORITE = 'CHANGE_FAVORITE';
 
+const LS_PRODUCTS = 'products';
+
 export const getProducts = (dispatch) => {
-  dispatch({ type: GET_PRODUCTS, payload: items });
+  let products = localStorage.getItem(LS_PRODUCTS)
+    ? JSON.parse(localStorage.getItem(LS_PRODUCTS))
+    : [...items];
+  dispatch({ type: GET_PRODUCTS, payload: products });
 };
 
 export const getProduct = (dispatch, id) => {

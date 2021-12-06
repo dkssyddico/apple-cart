@@ -1,4 +1,5 @@
 import { createContext, useReducer } from 'react';
+import items from '../data/items';
 import {
   GET_PRODUCTS,
   GET_PRODUCT,
@@ -21,7 +22,7 @@ const LS_PRODUCTS = 'products';
 const initialState = {
   productList: localStorage.getItem(LS_PRODUCTS)
     ? JSON.parse(localStorage.getItem(LS_PRODUCTS))
-    : [],
+    : [...items],
   loading: true,
   product: {},
   cart: localStorage.getItem(LS_CART) ? JSON.parse(localStorage.getItem(LS_CART)) : [],

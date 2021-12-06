@@ -35,7 +35,7 @@ const InfoContainer = styled(FlexColumnBox)`
 
 const OrderId = styled.span`
   font-weight: 500;
-  color: ${(props) => props.theme.green};
+  color: ${(props) => props.theme.color.green};
 `;
 
 const BtnContainer = styled(FlexColumnBox)`
@@ -51,7 +51,7 @@ const Btn = styled.button`
   text-align: center;
   cursor: pointer;
   border-radius: 4px;
-  background-color: ${(props) => props.theme.green};
+  background-color: ${(props) => props.theme.color.green};
   color: white;
   font-weight: 500;
 `;
@@ -59,9 +59,9 @@ const Btn = styled.button`
 const MainBtn = styled(Btn)``;
 
 const OrderDetailBtn = styled(Btn)`
-  border: 1px solid ${(props) => props.theme.green};
-  background-color: ${(props) => props.theme.white};
-  color: ${(props) => props.theme.green};
+  border: 1px solid ${(props) => props.theme.color.green};
+  background-color: ${(props) => props.theme.color.white};
+  color: ${(props) => props.theme.color.green};
 `;
 
 function PaymentComplete() {

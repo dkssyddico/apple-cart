@@ -38,9 +38,9 @@ const OrderInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  border: 1px solid ${(props) => props.theme.lightGray};
+  border: 1px solid ${(props) => props.theme.color.lightGray};
   border-bottom: none;
-  background-color: #f5f6fa;
+  background-color: ${(props) => props.theme.color.whiteGray};
 `;
 
 const Strong = styled.span`
@@ -48,13 +48,13 @@ const Strong = styled.span`
 `;
 
 const CardsContainer = styled.div`
-  border: 1px solid ${(props) => props.theme.lightGray};
+  border: 1px solid ${(props) => props.theme.color.lightGray};
 `;
 
 const Card = styled.div`
   width: 100%;
   height: 100%;
-  border-bottom: 1px solid ${(props) => props.theme.lightGray};
+  border-bottom: 1px solid ${(props) => props.theme.color.lightGray};
 `;
 
 const CardContainer = styled.div`
@@ -109,7 +109,7 @@ const CartBtn = styled.button`
   text-align: center;
   cursor: pointer;
   border-radius: 4px;
-  background-color: ${(props) => props.theme.green};
+  background-color: ${(props) => props.theme.color.green};
   color: white;
   font-weight: 500;
   transition: all 0.3s ease-in-out;

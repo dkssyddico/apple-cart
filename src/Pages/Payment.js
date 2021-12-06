@@ -87,7 +87,7 @@ const InfoBox = styled.div`
     margin-bottom: 1rem;
   }
   p {
-    color: #576574;
+    color: ${(props) => props.theme.color.darkGray};
     font-size: 14px;
   }
 `;
@@ -99,7 +99,7 @@ const PriceContainer = styled.div`
 const SummaryContainer = styled.div`
   height: 200px;
   flex-basis: 30%;
-  border: 1px solid #f2f2f2;
+  border: 1px solid ${(props) => props.theme.color.whiteGray};
   padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
@@ -126,7 +126,7 @@ const PayNowBtn = styled.button`
   text-align: center;
   cursor: pointer;
   border-radius: 4px;
-  background-color: ${(props) => props.theme.green};
+  background-color: ${(props) => props.theme.color.green};
   color: white;
   font-weight: 500;
 `;

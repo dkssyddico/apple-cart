@@ -39,14 +39,14 @@ const Card = styled.div`
 `;
 
 const Date = styled.h2`
-  color: ${(props) => props.theme.darkGray};
+  color: ${(props) => props.theme.color.darkGray};
   font-weight: 500;
   font-size: 18px;
   margin-bottom: 1rem;
 `;
 
 const MetaContainer = styled.div`
-  border: 1px solid ${(props) => props.theme.lightGray};
+  border: 1px solid ${(props) => props.theme.color.lightGray};
   padding: 1.2rem 1.5rem;
 `;
 
@@ -55,7 +55,7 @@ const TitleContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-bottom: 1rem;
-  border-bottom: 1px solid ${(props) => props.theme.lightGray};
+  border-bottom: 1px solid ${(props) => props.theme.color.lightGray};
   h3:first-child {
     font-weight: 500;
     font-size: 18px;
