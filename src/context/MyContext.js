@@ -110,15 +110,16 @@ const reducer = (state = initialState, action) => {
       let newOrder = action.payload;
       let orderAdded = [newOrder, ...state.orders];
       localStorage.setItem(LS_ORDER, JSON.stringify(orderAdded));
+      let updatedCart = [...state.cart];
       for (let i = 0; i < newOrder.items.length; i++) {
         let item = newOrder.items[i];
-
-        let idx = state.cart.findIndex((e) => e.productId === item.productId);
-        state.cart.splice(idx, 1);
+        let idx = updatedCart.findIndex((e) => e.productId === item.productId);
+        updatedCart.splice(idx, 1);
       }
-      localStorage.setItem(LS_CART, JSON.stringify(state.cart));
+      localStorage.setItem(LS_CART, JSON.stringify(updatedCart));
       return {
         ...state,
+        cart: updatedCart,
         orders: orderAdded,
       };
     case GET_ORDER:
