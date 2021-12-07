@@ -74,13 +74,15 @@ const reducer = (state = initialState, action) => {
       };
     case CHANGE_CHECKED_STATUS:
       let itemCheckedChanged = action.payload;
+      let changedStatusCart = state.cart.map((item) =>
+        item.productId === itemCheckedChanged.productId
+          ? { ...item, selected: itemCheckedChanged.selected }
+          : item
+      );
+      localStorage.setItem(LS_CART, JSON.stringify(changedStatusCart));
       return {
         ...state,
-        cart: state.cart.map((item) =>
-          item.productId === itemCheckedChanged.productId
-            ? { ...item, selected: itemCheckedChanged.selected }
-            : item
-        ),
+        cart: changedStatusCart,
       };
     case CHANGED_ALL_CHECKED:
       let allChecked = action.payload;

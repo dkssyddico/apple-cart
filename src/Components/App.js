@@ -9,6 +9,7 @@ import OrderDetail from '../Pages/OrderDetail';
 import NavBar from './NavBar';
 import GlobalStyles from './GlobalStyles';
 import PaymentComplete from '../Pages/PaymentComplete';
+import Section from './Section';
 
 function App() {
   return (
@@ -16,16 +17,18 @@ function App() {
       <GlobalStyles />
       <Router>
         <NavBar />
-        <Routes>
-          <Route path='/' element={<Main />}></Route>
-          <Route path='cart' element={<Cart />} />
-          <Route path='product/:id' element={<ProductDetail />} />
-          <Route path='payment' element={<Payment />} />
-          <Route path='complete' element={<PaymentComplete />} />
-          <Route path='order' element={<Order />} />
-          <Route path='order/:orderId' element={<OrderDetail />} />
-          <Route path='*' element={<Navigate to='/' replace={true} />} />
-        </Routes>
+        <Section>
+          <Routes>
+            <Route path='/' element={<Main />}></Route>
+            <Route path='cart' element={<Cart />} />
+            <Route path='product/:id' element={<ProductDetail />} />
+            <Route path='payment' element={<Payment />} />
+            <Route path='complete' element={<PaymentComplete />} />
+            <Route path='order' element={<Order />} />
+            <Route path='order/:orderId' element={<OrderDetail />} />
+            <Route path='*' element={<Navigate to='/' replace={true} />} />
+          </Routes>
+        </Section>
       </Router>
     </>
   );

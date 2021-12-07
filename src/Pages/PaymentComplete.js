@@ -3,20 +3,6 @@ import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { Context } from '../context/MyContext';
 
-const Section = styled.section`
-  padding: 8rem 10rem 5rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media screen and (max-width: 1023px) {
-    padding: 8rem 4rem 5rem;
-  }
-  @media screen and (max-width: 767px) {
-    padding: 8rem 1.5rem 5rem;
-  }
-`;
-
 const FlexColumnBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -74,7 +60,7 @@ function PaymentComplete() {
   } = location;
 
   return (
-    <Section>
+    <>
       <InfoContainer>
         <h1>Thank you for your order!</h1>
         <p>
@@ -95,7 +81,7 @@ function PaymentComplete() {
           <Link to={`/order/${orderId}`}>Go to order detail</Link>
         </OrderDetailBtn>
       </BtnContainer>
-    </Section>
+    </>
   );
 }
 

@@ -4,17 +4,7 @@ import styled from 'styled-components';
 import ProductCard from '../Components/ProductCard';
 import { getProducts } from '../context/Action';
 import { Context } from '../context/MyContext';
-
-const Section = styled.section`
-  padding: 8rem 8rem 5rem;
-  transition: all 0.3s ease-in-out;
-  @media screen and (max-width: 1023px) {
-    padding: 8rem 4rem 5rem;
-  }
-  @media screen and (max-width: 767px) {
-    padding: 8rem 1.5rem 5rem;
-  }
-`;
+import Notification from '../Components/Notification';
 
 const Container = styled.div`
   display: flex;
@@ -33,7 +23,6 @@ const CardContainer = styled.div`
 
 function Main() {
   const { state, dispatch } = useContext(Context);
-
   const { loading, productList } = state;
 
   useEffect(() => {
@@ -41,9 +30,9 @@ function Main() {
   }, [dispatch]);
 
   return (
-    <Section>
+    <>
       {loading ? (
-        <h1>Loading</h1>
+        <Notification>Loading</Notification>
       ) : (
         <Container>
           {productList.map((item) => (
@@ -59,7 +48,7 @@ function Main() {
           ))}
         </Container>
       )}
-    </Section>
+    </>
   );
 }
 
