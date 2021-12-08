@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Context } from '../context/MyContext';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -48,15 +48,21 @@ const Subtitle = styled.h2`
 function Payment() {
   const { state, dispatch } = useContext(Context);
   const { checkout, orders } = state;
+  const navigate = useNavigate();
 
-  let navigate = useNavigate();
+  useEffect(() => {
+    if (checkout.length === 0) {
+      alert('구매하실 상품이 없습니다');
+      navigate('/cart');
+    }
+  }, []);
 
   const handlePaymentClick = () => {
-    let orderDate = new Date();
     let orderId = orders.length + 1;
+    let orderDate = new Date();
     let year = orderDate.getFullYear();
     let month = orderDate.getMonth() + 1;
-    let day = orderDate.getDate();
+    let day = orderDate.getDate() < 10 ? `0${orderDate.getDate()}` : orderDate.getDate();
     let hours = orderDate.getHours();
     let mins = orderDate.getMinutes() < 10 ? `0${orderDate.getMinutes()}` : orderDate.getMinutes();
 

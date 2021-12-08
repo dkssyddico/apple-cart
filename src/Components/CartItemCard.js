@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { HiOutlineTrash } from 'react-icons/hi';
 import { changeChecked, changeQty, deleteItem } from '../context/Action';
 import { Context } from '../context/MyContext';
+import { Link } from 'react-router-dom';
 
 const Card = styled.div`
   width: 100%;
@@ -134,7 +135,9 @@ function CartItemCard({ item }) {
         <ImgContainer>
           <ProductImg src={`/images/${image}`} alt='product' />
         </ImgContainer>
-        <h3>{item.name}</h3>
+        <h3>
+          <Link to={`/product/${productId}`}>{item.name}</Link>
+        </h3>
       </InfoContainer>
       <QtyContainer>
         <QtyBtnContainer onClick={(event) => handleQtyBtnClick(event)}>
