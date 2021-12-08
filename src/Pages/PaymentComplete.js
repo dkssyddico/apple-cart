@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Context } from '../context/MyContext';
 
 const FlexColumnBox = styled.div`
@@ -51,13 +51,9 @@ const OrderDetailBtn = styled(Btn)`
 `;
 
 function PaymentComplete() {
-  let location = useLocation();
+  const { orderId } = useParams();
   const { state } = useContext(Context);
-  const currentOrder = state.orders[0];
-
-  let {
-    state: { orderId },
-  } = location;
+  const currentOrder = state.orders[orderId - 1];
 
   return (
     <>

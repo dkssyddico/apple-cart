@@ -23,7 +23,7 @@ function App() {
             <Route path='cart' element={<Cart />} />
             <Route path='product/:id' element={<ProductDetail />} />
             <Route path='payment' element={<Payment />} />
-            <Route path='complete' element={<PaymentComplete />} />
+            <Route path='complete/:orderId' element={<PaymentComplete />} />
             <Route path='order' element={<Order />} />
             <Route path='order/:orderId' element={<OrderDetail />} />
             <Route path='*' element={<Navigate to='/' replace={true} />} />

@@ -66,11 +66,7 @@ function Payment() {
       items: [...checkout],
     };
     addOrder(dispatch, orderInfo);
-    navigate('/complete', {
-      state: {
-        orderId,
-      },
-    });
+    navigate(`/complete/${orderId}`);
   };
 
   return (
