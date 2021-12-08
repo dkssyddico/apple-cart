@@ -13,6 +13,7 @@ import {
   ADD_ORDER,
   GET_ORDER,
   CHANGE_FAVORITE,
+  GET_ORDERS,
 } from './Action';
 
 const LS_CART = 'cart';
@@ -29,6 +30,8 @@ const initialState = {
   checkout: [],
   orders: localStorage.getItem(LS_ORDER) ? JSON.parse(localStorage.getItem(LS_ORDER)) : [],
   order: {},
+  selectedOrders: [],
+  hasOrdersMore: null,
 };
 
 export const Context = createContext({});
@@ -124,6 +127,15 @@ const reducer = (state = initialState, action) => {
         cart: updatedCart,
         orders: orderAdded,
       };
+    case GET_ORDERS:
+      let pageNumber = action.payload;
+      let selectedOrder = state.orders.slice(0, pageNumber * 3);
+      return {
+        ...state,
+        selectedOrders: [...selectedOrder],
+        hasOrdersMore: state.orders.length > selectedOrder.length ? true : false,
+      };
+
     case GET_ORDER:
       let orderId = action.payload;
       let orderSelected = state.orders.filter((order) => String(order.orderId) === String(orderId));

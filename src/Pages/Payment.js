@@ -55,7 +55,7 @@ function Payment() {
       alert('구매하실 상품이 없습니다');
       navigate('/cart');
     }
-  }, []);
+  }, [checkout.length, navigate]);
 
   const handlePaymentClick = () => {
     let orderId = orders.length + 1;

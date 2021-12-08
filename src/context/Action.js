@@ -10,6 +10,7 @@ export const CHANGED_ALL_CHECKED = 'CHANGED_ALL_CHECKED';
 export const DELETE_SELECTED = 'DELETE_SELECTED';
 export const ADD_CHECKOUT = 'ADD_CHECKOUT';
 export const ADD_ORDER = 'ADD_ORDER';
+export const GET_ORDERS = 'GET_ORDERS';
 export const GET_ORDER = 'GET_ORDER';
 export const CHANGE_FAVORITE = 'CHANGE_FAVORITE';
 
@@ -64,4 +65,8 @@ export const getOrder = (dispatch, orderId) => {
 
 export const changeFavorite = (dispatch, itemInfo) => {
   dispatch({ type: CHANGE_FAVORITE, payload: itemInfo });
+};
+
+export const getOrders = (dispatch, pageNumber) => {
+  dispatch({ type: GET_ORDERS, payload: pageNumber });
 };

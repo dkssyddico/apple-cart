@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Context } from '../context/MyContext';
-import { addCart, getOrder } from '../context/Action';
+import { getOrder } from '../context/Action';
 import { v4 as uuidv4 } from 'uuid';
 import OrderDetailCard from '../Components/OrderDetailCard';
 
@@ -45,7 +45,7 @@ function OrderDetail() {
 
   useEffect(() => {
     getOrder(dispatch, orderId);
-  }, []);
+  }, [dispatch, orderId]);
 
   return (
     <>

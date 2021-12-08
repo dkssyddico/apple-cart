@@ -135,7 +135,7 @@ function ProductDetail() {
 
   useEffect(() => {
     getProduct(dispatch, productId);
-  }, []);
+  }, [dispatch, productId]);
 
   const handleQtyChange = (event) => {
     const { value } = event.target;
