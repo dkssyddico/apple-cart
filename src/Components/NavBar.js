@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Context } from '../context/MyContext';
+import { ShoppingContext } from '../Contexts/Shopping';
 
 const Nav = styled.nav`
   width: 100%;
@@ -58,7 +58,7 @@ const CartCount = styled.div`
 `;
 
 function NavBar() {
-  const { state } = useContext(Context);
+  const { state } = useContext(ShoppingContext);
   const { cart } = state;
 
   return (

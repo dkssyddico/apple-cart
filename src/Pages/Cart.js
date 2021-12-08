@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Context } from '../context/MyContext';
 import styled from 'styled-components';
-import { changeAllChecked, deleteSelected, addCheckout } from '../context/Action';
+import { changeAllChecked, deleteSelected, addCheckout } from '../Actions/Shopping';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import Notification from '../Components/Notification';
 import CartItemCard from '../Components/CartItemCard';
 import SummaryCard from '../Components/SummaryCard';
+import { ShoppingContext } from '../Contexts/Shopping';
 
 const Title = styled.h1`
   font-size: 1.5rem;
@@ -70,7 +70,7 @@ const RemoveBtn = styled.button`
 `;
 
 function Cart() {
-  const { state, dispatch } = useContext(Context);
+  const { state, dispatch } = useContext(ShoppingContext);
   const [allChecked, setAllChecked] = useState(true);
   let navigate = useNavigate();
 

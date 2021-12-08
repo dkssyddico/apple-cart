@@ -1,7 +1,3 @@
-import items from '../data/items';
-
-export const GET_PRODUCTS = 'GET_PRODUCTS';
-export const GET_PRODUCT = 'GET_PRODUCT';
 export const ADD_CART = 'ADD_CART';
 export const CHANGE_QUANTITY = 'CHANGE_QUANTITY';
 export const DELETE_ITEM = 'CART/DELETE_ITEM';
@@ -12,20 +8,6 @@ export const ADD_CHECKOUT = 'ADD_CHECKOUT';
 export const ADD_ORDER = 'ADD_ORDER';
 export const GET_ORDERS = 'GET_ORDERS';
 export const GET_ORDER = 'GET_ORDER';
-export const CHANGE_FAVORITE = 'CHANGE_FAVORITE';
-
-const LS_PRODUCTS = 'products';
-
-export const getProducts = (dispatch) => {
-  let products = localStorage.getItem(LS_PRODUCTS)
-    ? JSON.parse(localStorage.getItem(LS_PRODUCTS))
-    : [...items];
-  dispatch({ type: GET_PRODUCTS, payload: products });
-};
-
-export const getProduct = (dispatch, id) => {
-  dispatch({ type: GET_PRODUCT, payload: items[id] });
-};
 
 export const addCart = (dispatch, itemInfo) => {
   dispatch({ type: ADD_CART, payload: itemInfo });
@@ -61,10 +43,6 @@ export const addOrder = (dispatch, orderInfo) => {
 
 export const getOrder = (dispatch, orderId) => {
   dispatch({ type: GET_ORDER, payload: orderId });
-};
-
-export const changeFavorite = (dispatch, itemInfo) => {
-  dispatch({ type: CHANGE_FAVORITE, payload: itemInfo });
 };
 
 export const getOrders = (dispatch, pageNumber) => {

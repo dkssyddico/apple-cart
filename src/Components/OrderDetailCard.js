@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import { addCart } from '../context/Action';
-import { Context } from '../context/MyContext';
+import { addCart } from '../Actions/Shopping';
+import { ShoppingContext } from '../Contexts/Shopping';
 
 const Card = styled.div`
   width: 100%;
@@ -72,7 +72,7 @@ const CartBtn = styled.button`
 `;
 
 function OrderDetailCard({ item }) {
-  const { state, dispatch } = useContext(Context);
+  const { state, dispatch } = useContext(ShoppingContext);
   const { cart } = state;
 
   let navigate = useNavigate();

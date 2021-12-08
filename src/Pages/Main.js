@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useContext } from 'react/cjs/react.development';
 import styled from 'styled-components';
 import ProductCard from '../Components/ProductCard';
-import { getProducts } from '../context/Action';
-import { Context } from '../context/MyContext';
+import { getProducts } from '../Actions/Product';
+import { ProductContext } from '../Contexts/Product';
 import Notification from '../Components/Notification';
 
 const Container = styled.div`
@@ -22,7 +22,7 @@ const CardContainer = styled.div`
 `;
 
 function Main() {
-  const { state, dispatch } = useContext(Context);
+  const { state, dispatch } = useContext(ProductContext);
   const { loading, productList } = state;
 
   useEffect(() => {

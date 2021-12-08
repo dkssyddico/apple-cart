@@ -1,8 +1,5 @@
 import { createContext, useReducer } from 'react';
-import items from '../data/items';
 import {
-  GET_PRODUCTS,
-  GET_PRODUCT,
   ADD_CART,
   CHANGE_QUANTITY,
   DELETE_ITEM,
@@ -12,20 +9,19 @@ import {
   ADD_CHECKOUT,
   ADD_ORDER,
   GET_ORDER,
-  CHANGE_FAVORITE,
   GET_ORDERS,
-} from './Action';
+} from '../Actions/Shopping';
 
 const LS_CART = 'cart';
 const LS_ORDER = 'orders';
-const LS_PRODUCTS = 'products';
+
+const setLocalStorage = (storageName, item) => {
+  localStorage.setItem(storageName, JSON.stringify(item));
+};
+
+export const ShoppingContext = createContext({});
 
 const initialState = {
-  productList: localStorage.getItem(LS_PRODUCTS)
-    ? JSON.parse(localStorage.getItem(LS_PRODUCTS))
-    : [...items],
-  loading: true,
-  product: {},
   cart: localStorage.getItem(LS_CART) ? JSON.parse(localStorage.getItem(LS_CART)) : [],
   checkout: [],
   orders: localStorage.getItem(LS_ORDER) ? JSON.parse(localStorage.getItem(LS_ORDER)) : [],
@@ -34,66 +30,56 @@ const initialState = {
   hasOrdersMore: null,
 };
 
-export const Context = createContext({});
-
 const reducer = (state = initialState, action) => {
+  let newCart;
   switch (action.type) {
-    case GET_PRODUCTS:
-      localStorage.setItem(LS_PRODUCTS, JSON.stringify(action.payload));
-      return {
-        ...state,
-        productList: action.payload,
-        loading: false,
-      };
-    case GET_PRODUCT:
-      return {
-        ...state,
-        product: action.payload,
-      };
+    // Cart Part
     case ADD_CART:
-      let cartAdded = [action.payload, ...state.cart];
-      localStorage.setItem(LS_CART, JSON.stringify(cartAdded));
+      newCart = [action.payload, ...state.cart];
+      setLocalStorage(LS_CART, newCart);
       return {
         ...state,
-        cart: cartAdded,
+        cart: newCart,
       };
     case CHANGE_QUANTITY:
       let { productId, quantity } = action.payload;
-      let cartChangedQty = state.cart.map((item) =>
+      newCart = state.cart.map((item) =>
         item.productId === productId ? { ...item, quantity } : item
       );
-      localStorage.setItem(LS_CART, JSON.stringify(cartChangedQty));
+      setLocalStorage(LS_CART, newCart);
       return {
         ...state,
-        cart: cartChangedQty,
+        cart: newCart,
       };
     case DELETE_ITEM:
       let deletedItemId = action.payload;
-      let remained = state.cart.filter((item) => item.productId !== deletedItemId);
-      localStorage.setItem(LS_CART, JSON.stringify(remained));
+      newCart = state.cart.filter((item) => item.productId !== deletedItemId);
+      setLocalStorage(LS_CART, newCart);
       return {
         ...state,
-        cart: remained,
+        cart: newCart,
       };
     case CHANGE_CHECKED_STATUS:
       let itemCheckedChanged = action.payload;
-      let changedStatusCart = state.cart.map((item) =>
+      newCart = state.cart.map((item) =>
         item.productId === itemCheckedChanged.productId
           ? { ...item, selected: itemCheckedChanged.selected }
           : item
       );
-      localStorage.setItem(LS_CART, JSON.stringify(changedStatusCart));
+      setLocalStorage(LS_CART, newCart);
       return {
         ...state,
-        cart: changedStatusCart,
+        cart: newCart,
       };
     case CHANGED_ALL_CHECKED:
       let allChecked = action.payload;
+      newCart = state.cart.map((item) => {
+        return { ...item, selected: !allChecked };
+      });
+      setLocalStorage(LS_CART, newCart);
       return {
         ...state,
-        cart: state.cart.map((item) => {
-          return { ...item, selected: !allChecked };
-        }),
+        cart: newCart,
       };
     case DELETE_SELECTED:
       let selected = action.payload;
@@ -102,7 +88,7 @@ const reducer = (state = initialState, action) => {
         let idx = state.cart.findIndex((e) => e.productId === item.productId);
         state.cart.splice(idx, 1);
       }
-      localStorage.setItem(LS_CART, JSON.stringify(state.cart));
+      setLocalStorage(LS_CART, state.cart);
       return {
         ...state,
       };
@@ -111,20 +97,22 @@ const reducer = (state = initialState, action) => {
         ...state,
         checkout: action.payload,
       };
+
+    // Order Part
     case ADD_ORDER:
       let newOrder = action.payload;
       let orderAdded = [newOrder, ...state.orders];
-      localStorage.setItem(LS_ORDER, JSON.stringify(orderAdded));
-      let updatedCart = [...state.cart];
+      setLocalStorage(LS_ORDER, orderAdded);
+      newCart = [...state.cart];
       for (let i = 0; i < newOrder.items.length; i++) {
         let item = newOrder.items[i];
-        let idx = updatedCart.findIndex((e) => e.productId === item.productId);
-        updatedCart.splice(idx, 1);
+        let idx = newCart.findIndex((e) => e.productId === item.productId);
+        newCart.splice(idx, 1);
       }
-      localStorage.setItem(LS_CART, JSON.stringify(updatedCart));
+      setLocalStorage(LS_CART, newCart);
       return {
         ...state,
-        cart: updatedCart,
+        cart: newCart,
         orders: orderAdded,
       };
     case GET_ORDERS:
@@ -143,29 +131,14 @@ const reducer = (state = initialState, action) => {
         ...state,
         order: orderSelected[0],
       };
-    case CHANGE_FAVORITE:
-      let productFavoriteChanged = action.payload;
-      let productChanged = state.productList[productFavoriteChanged.productId];
-      productChanged.favorite = productFavoriteChanged.favorite;
-      let listChanged = state.productList.filter((product) =>
-        String(product.productId) === String(productFavoriteChanged.id)
-          ? { ...product, favorite: productFavoriteChanged.favorite }
-          : product
-      );
-      localStorage.setItem(LS_PRODUCTS, JSON.stringify(listChanged));
-      return {
-        ...state,
-        product: productChanged,
-        productList: listChanged,
-      };
 
     default:
       return initialState;
   }
 };
 
-export const Provider = ({ children }) => {
+export const ShoppingProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const value = { state, dispatch };
-  return <Context.Provider value={value}>{children}</Context.Provider>;
+  return <ShoppingContext.Provider value={value}>{children}</ShoppingContext.Provider>;
 };

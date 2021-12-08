@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Context } from '../context/MyContext';
 import { v4 as uuidv4 } from 'uuid';
 import OrderCard from '../Components/OrderCard';
 import Notification from '../Components/Notification';
-import { getOrders } from '../context/Action';
+import { getOrders } from '../Actions/Shopping';
+import { ShoppingContext } from '../Contexts/Shopping';
 
 const Title = styled.h1`
   font-size: 1.5rem;
@@ -39,7 +39,7 @@ const ShowMoreBtn = styled.button`
 `;
 
 function Order() {
-  const { state, dispatch } = useContext(Context);
+  const { state, dispatch } = useContext(ShoppingContext);
   const { selectedOrders, hasOrdersMore } = state;
 
   const [pageNumber, setPageNumber] = useState(1);

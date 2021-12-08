@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import App from './Components/App';
 import { ThemeProvider } from 'styled-components';
 import theme from './style/theme';
-import { Provider } from './context/MyContext';
+import GlobalProvider from './Contexts/GlobalProvider';
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <Provider>
+      <GlobalProvider>
         <App />
-      </Provider>
+      </GlobalProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')

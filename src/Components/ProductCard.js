@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
-import { Context } from '../context/MyContext';
-import { changeFavorite } from '../context/Action';
+import { ProductContext } from '../Contexts/Product';
+import { changeFavorite } from '../Actions/Product';
 
 const Card = styled.div`
   position: relative;
@@ -47,7 +47,7 @@ const FavoriteBox = styled.div`
 `;
 
 function ProductCard({ id, image, name, price, favorite }) {
-  const { dispatch } = useContext(Context);
+  const { dispatch } = useContext(ProductContext);
   const handleFavoriteClick = () => {
     let itemInfo = {
       productId: id,

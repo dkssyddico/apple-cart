@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
-import { Context } from '../context/MyContext';
+import { ShoppingContext } from '../Contexts/Shopping';
 
 const FlexColumnBox = styled.div`
   display: flex;
@@ -52,7 +52,7 @@ const OrderDetailBtn = styled(Btn)`
 
 function PaymentComplete() {
   const { orderId } = useParams();
-  const { state } = useContext(Context);
+  const { state } = useContext(ShoppingContext);
   const currentOrder = state.orders[orderId - 1];
 
   return (

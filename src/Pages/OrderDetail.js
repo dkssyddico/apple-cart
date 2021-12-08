@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { Context } from '../context/MyContext';
-import { getOrder } from '../context/Action';
+import { getOrder } from '../Actions/Shopping';
 import { v4 as uuidv4 } from 'uuid';
 import OrderDetailCard from '../Components/OrderDetailCard';
+import { ShoppingContext } from '../Contexts/Shopping';
 
 const Title = styled.h1`
   font-size: 1.5rem;
@@ -40,7 +40,7 @@ const CardsContainer = styled.div`
 
 function OrderDetail() {
   let { orderId } = useParams();
-  const { state, dispatch } = useContext(Context);
+  const { state, dispatch } = useContext(ShoppingContext);
   const { order } = state;
 
   useEffect(() => {

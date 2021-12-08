@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { addCart, addCheckout, changeFavorite, getProduct } from '../context/Action';
-import { Context } from '../context/MyContext';
+import { addCart, addCheckout } from '../Actions/Shopping';
+import { changeFavorite, getProduct } from '../Actions/Product';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
 import styled from 'styled-components';
+import { ProductContext } from '../Contexts/Product';
+import { ShoppingContext } from '../Contexts/Shopping';
 
 const FlexContainer = styled.div`
   display: flex;
@@ -129,13 +131,15 @@ const CheckoutBtn = styled(Btn)`
 function ProductDetail() {
   let { id: productId } = useParams();
   const [quantity, setQuantity] = useState(1);
-  const { state, dispatch } = useContext(Context);
-  const { product, cart } = state;
+  const { state: productState, dispatch: productDispatch } = useContext(ProductContext);
+  const { state: shoppingState, dispatch: shoppingDispatch } = useContext(ShoppingContext);
+  const { product } = productState;
+  const { cart } = shoppingState;
   let navigate = useNavigate();
 
   useEffect(() => {
-    getProduct(dispatch, productId);
-  }, [dispatch, productId]);
+    getProduct(productDispatch, productId);
+  }, [productDispatch, productId]);
 
   const handleQtyChange = (event) => {
     const { value } = event.target;
@@ -168,7 +172,7 @@ function ProductDetail() {
         image: product.image,
         selected: true,
       };
-      addCart(dispatch, item);
+      addCart(shoppingDispatch, item);
       let confirm = window.confirm('상품이 장바구니에 담겼습니다. 장바구니로 이동하시겠습니까?');
       if (confirm) {
         navigate('/cart');
@@ -186,7 +190,7 @@ function ProductDetail() {
       selected: true,
       favorite: product.favorite,
     };
-    addCheckout(dispatch, [item]);
+    addCheckout(shoppingDispatch, [item]);
     navigate('/payment');
   };
 
@@ -196,7 +200,7 @@ function ProductDetail() {
       productId,
       favorite: !favorite,
     };
-    changeFavorite(dispatch, itemInfo);
+    changeFavorite(shoppingDispatch, itemInfo);
   };
 
   return (

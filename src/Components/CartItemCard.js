@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { HiOutlineTrash } from 'react-icons/hi';
-import { changeChecked, changeQty, deleteItem } from '../context/Action';
-import { Context } from '../context/MyContext';
+import { changeChecked, changeQty, deleteItem } from '../Actions/Shopping';
 import { Link } from 'react-router-dom';
+import { ShoppingContext } from '../Contexts/Shopping';
 
 const Card = styled.div`
   width: 100%;
@@ -84,7 +84,7 @@ const IconContainer = styled.div`
 function CartItemCard({ item }) {
   const { selected, image, quantity, price, productId } = item;
 
-  const { dispatch } = useContext(Context);
+  const { dispatch } = useContext(ShoppingContext);
 
   const handleQtyBtnClick = (event) => {
     const { name } = event.target;
