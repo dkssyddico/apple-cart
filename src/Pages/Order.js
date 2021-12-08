@@ -56,19 +56,21 @@ function Order() {
     <>
       <Title>Order History</Title>
       <Container>
-        {selectedOrders && selectedOrders.length > 0 ? (
-          <>
-            {selectedOrders.map((order) => (
-              <OrderCard key={uuidv4()} order={order} />
-            ))}
-            {hasOrdersMore && (
-              <BtnContainer>
-                <ShowMoreBtn onClick={handleShowMoreClick}>Show more</ShowMoreBtn>
-              </BtnContainer>
-            )}
-          </>
-        ) : (
-          <Notification>No order yet</Notification>
+        <div className='order__list'>
+          {selectedOrders && selectedOrders.length > 0 ? (
+            <>
+              {selectedOrders.map((order) => (
+                <OrderCard key={uuidv4()} order={order} />
+              ))}
+            </>
+          ) : (
+            <Notification>No order yet</Notification>
+          )}
+        </div>
+        {hasOrdersMore && (
+          <BtnContainer>
+            <ShowMoreBtn onClick={handleShowMoreClick}>Show more</ShowMoreBtn>
+          </BtnContainer>
         )}
       </Container>
     </>
