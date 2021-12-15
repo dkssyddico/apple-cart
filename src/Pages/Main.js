@@ -24,7 +24,6 @@ const CardContainer = styled.div`
 function Main() {
   const { state, dispatch } = useContext(ProductContext);
   const { loading, productList } = state;
-
   useEffect(() => {
     getProducts(dispatch);
   }, [dispatch]);

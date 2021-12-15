@@ -14,7 +14,7 @@ export const getProducts = (dispatch) => {
 };
 
 export const getProduct = (dispatch, id) => {
-  dispatch({ type: GET_PRODUCT, payload: items[id] });
+  dispatch({ type: GET_PRODUCT, payload: id });
 };
 
 export const changeFavorite = (dispatch, itemInfo) => {

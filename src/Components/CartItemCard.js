@@ -140,7 +140,7 @@ function CartItemCard({ item }) {
         </h3>
       </InfoContainer>
       <QtyContainer>
-        <QtyBtnContainer onClick={(event) => handleQtyBtnClick(event)}>
+        <QtyBtnContainer onClick={handleQtyBtnClick}>
           <SmallBtn name='decrement'>-</SmallBtn>
           <QtyBox>
             <span>{parseInt(quantity)}</span>

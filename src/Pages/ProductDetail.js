@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { addCart, addCheckout } from '../Actions/Shopping';
 import { changeFavorite, getProduct } from '../Actions/Product';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
-import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
+import { HiArrowLeft, HiHeart, HiOutlineHeart } from 'react-icons/hi';
 import styled from 'styled-components';
 import { ProductContext } from '../Contexts/Product';
 import { ShoppingContext } from '../Contexts/Shopping';
@@ -15,6 +15,28 @@ const FlexContainer = styled.div`
 const Section = styled(FlexContainer)`
   flex-wrap: wrap;
   gap: 4%;
+`;
+
+const Btn = styled.button`
+  all: unset;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+`;
+
+const BackContainer = styled(FlexContainer)`
+  margin-bottom: 2rem;
+`;
+
+const BackBtn = styled(Btn)`
+  display: flex;
+  padding: 0px;
+  align-items: center;
+`;
+
+const BackBtnText = styled.p`
+  margin-left: 0.5rem;
 `;
 
 const ImgContainer = styled.div`
@@ -104,14 +126,6 @@ const BtnContainer = styled(FlexContainer)`
   gap: 4px;
 `;
 
-const Btn = styled.button`
-  all: unset;
-  padding: 12px;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 4px;
-`;
-
 const CartBtn = styled(Btn)`
   flex: 1 1 45%;
   background-color: ${(props) => props.theme.color.green};
@@ -140,6 +154,10 @@ function ProductDetail() {
   useEffect(() => {
     getProduct(productDispatch, productId);
   }, [productDispatch, productId]);
+
+  const handleBackClick = () => {
+    navigate('/');
+  };
 
   const handleQtyChange = (event) => {
     const { value } = event.target;
@@ -180,7 +198,7 @@ function ProductDetail() {
     }
   };
 
-  const handleShowNowClick = () => {
+  const handleShopNowClick = () => {
     let item = {
       productId,
       name: product.name,
@@ -205,43 +223,51 @@ function ProductDetail() {
 
   return (
     product && (
-      <Section>
-        <ImgContainer>
-          <ProductImg src={`/images/${product.image}`} alt='product' />
-        </ImgContainer>
-        <MetaContainer>
-          <TopContainer>
-            <h2>{product.name}</h2>
-            <FavoriteBtn onClick={handleFavoriteClick}>
-              {product.favorite ? <HiHeart /> : <HiOutlineHeart />}
-            </FavoriteBtn>
-          </TopContainer>
-          <PriceContainer>
-            <h3>Price</h3>
-            <h3>$ {product.price}</h3>
-          </PriceContainer>
-          <QtyContainer>
-            <h3>Quantity</h3>
-            <QtyBtnContainer>
-              <SmallBtn onClick={handleDecrement}>
-                <AiOutlineMinus />
-              </SmallBtn>
-              <Input type='number' value={quantity} onChange={handleQtyChange} />
-              <SmallBtn onClick={handleIncrement}>
-                <AiOutlinePlus />
-              </SmallBtn>
-            </QtyBtnContainer>
-          </QtyContainer>
-          <TotalPriceContainer>
-            <p>Total Price</p>
-            <p>$ {product.price * quantity}</p>
-          </TotalPriceContainer>
-          <BtnContainer>
-            <CartBtn onClick={handleCartClick}>Add to cart</CartBtn>
-            <CheckoutBtn onClick={handleShowNowClick}>Shop now</CheckoutBtn>
-          </BtnContainer>
-        </MetaContainer>
-      </Section>
+      <>
+        <BackContainer>
+          <BackBtn onClick={handleBackClick}>
+            <HiArrowLeft />
+            <BackBtnText>Back to Main</BackBtnText>
+          </BackBtn>
+        </BackContainer>
+        <Section>
+          <ImgContainer>
+            <ProductImg src={`/images/${product.image}`} alt='product' />
+          </ImgContainer>
+          <MetaContainer>
+            <TopContainer>
+              <h2>{product.name}</h2>
+              <FavoriteBtn onClick={handleFavoriteClick}>
+                {product.favorite ? <HiHeart /> : <HiOutlineHeart />}
+              </FavoriteBtn>
+            </TopContainer>
+            <PriceContainer>
+              <h3>Price</h3>
+              <h3>$ {product.price}</h3>
+            </PriceContainer>
+            <QtyContainer>
+              <h3>Quantity</h3>
+              <QtyBtnContainer>
+                <SmallBtn onClick={handleDecrement}>
+                  <AiOutlineMinus />
+                </SmallBtn>
+                <Input type='number' value={quantity} onChange={handleQtyChange} />
+                <SmallBtn onClick={handleIncrement}>
+                  <AiOutlinePlus />
+                </SmallBtn>
+              </QtyBtnContainer>
+            </QtyContainer>
+            <TotalPriceContainer>
+              <p>Total Price</p>
+              <p>$ {product.price * quantity}</p>
+            </TotalPriceContainer>
+            <BtnContainer>
+              <CartBtn onClick={handleCartClick}>Add to cart</CartBtn>
+              <CheckoutBtn onClick={handleShopNowClick}>Shop now</CheckoutBtn>
+            </BtnContainer>
+          </MetaContainer>
+        </Section>
+      </>
     )
   );
 }

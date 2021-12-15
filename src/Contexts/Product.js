@@ -37,9 +37,10 @@ const reducer = (state = initialState, action) => {
         loading: false,
       };
     case GET_PRODUCT:
+      const productId = action.payload;
       return {
         ...state,
-        product: action.payload,
+        product: state.productList[productId],
       };
     case CHANGE_FAVORITE:
       let productFavoriteChanged = action.payload;
